@@ -27,7 +27,7 @@ default_responses = {
     "how are you": "I'm doing great, thanks for asking! How about you?",
     "who are you": "I'm Wasif's personal chatbot 🤖, built with Flask and Python!",
     "what can you do": "I can chat, Tell the weather, learn new replies, and chill 😎",
-    "what’s your name": "I’m WasifBot — your virtual buddy 👾"
+    "what’s your name": "I’m WasifBot — your virtual buddy 👾",
 }
 
 # List of jokes
