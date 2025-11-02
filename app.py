@@ -50,7 +50,6 @@ jokes = [
     "Why did the developer go broke? Because he used up all his cache 💸",
     "How many programmers does it take to change a light bulb? None — that's a hardware problem!",
 ]
-]
 
 # --- Load and save memory ---
 def load_memory():
