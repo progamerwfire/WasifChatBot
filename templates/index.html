@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wasif's Chatbot 🤖</title>
+  <style>
+    body {
+      background-color: #0d0d0d;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .chat-container {
+      width: 400px;
+      height: 600px;
+      background-color: #1a1a1a;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-box {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      scrollbar-width: thin;
+      scrollbar-color: #ff3b3b #1a1a1a;
+    }
+
+    .chat-box::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .chat-box::-webkit-scrollbar-thumb {
+      background: #ff3b3b;
+      border-radius: 10px;
+    }
+
+    .chat-box p {
+      margin: 0;
+      padding: 10px 15px;
+      border-radius: 10px;
+      max-width: 80%;
+      word-wrap: break-word;
+    }
+
+    .user {
+      align-self: flex-end;
+      background-color: #ff3b3b;
+      color: white;
+    }
+
+    .bot {
+      align-self: flex-start;
+      background-color: #333;
+      color: #fff;
+      position: relative;
+    }
+
+    /* Typing dots animation */
+    .typing {
+      display: inline-block;
+      position: relative;
+      width: 40px;
+      height: 10px;
+    }
+
+    .typing span {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background-color: #aaa;
+      border-radius: 50%;
+      position: absolute;
+      animation: blink 1.5s infinite ease-in-out;
+    }
+
+    .typing span:nth-child(1) { left: 0; animation-delay: 0s; }
+    .typing span:nth-child(2) { left: 12px; animation-delay: 0.2s; }
+    .typing span:nth-child(3) { left: 24px; animation-delay: 0.4s; }
+
+    @keyframes blink {
+      0%, 80%, 100% { opacity: 0.2; transform: translateY(0); }
+      40% { opacity: 1; transform: translateY(-3px); }
+    }
+
+    .suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px;
+      justify-content: center;
+      background: #111;
+      padding: 10px 0;
+      border-top: 1px solid #333;
+      border-bottom: 1px solid #333;
+    }
+
+    .suggest-btn {
+      background-color: #444;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 15px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .suggest-btn:hover {
+      background-color: #666;
+    }
+
+    .input-area {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #333;
+      background-color: #111;
+    }
+
+    input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      outline: none;
+      font-size: 15px;
+      background-color: #222;
+      color: white;
+    }
+
+    button#send-btn {
+      background-color: #ff3b3b;
+      border: none;
+      padding: 10px 15px;
+      margin-left: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    button#send-btn:hover {
+      background-color: #ff6666;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-box" id="chat-box"></div>
+
+    <div class="suggestions">
+      <button class="suggest-btn">Who are you?</button>
+      <button class="suggest-btn">How are you?</button>
+      <button class="suggest-btn">What can you do?</button>
+      <button class="suggest-btn">Tell me a joke</button>
+      <button class="suggest-btn">What’s your name?</button>
+    </div>
+
+    <div class="input-area">
+      <input type="text" id="user-input" placeholder="Type a message..." />
+      <button id="send-btn">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const chatBox = document.getElementById("chat-box");
+    const userInput = document.getElementById("user-input");
+    const sendBtn = document.getElementById("send-btn");
+    const suggestionButtons = document.querySelectorAll(".suggest-btn");
+
+    function addMessage(sender, text) {
+      const msg = document.createElement("p");
+      msg.className = sender;
+      if (sender === "bot") {
+        msg.innerHTML = "Bot: <span class='typing'><span></span><span></span><span></span></span>";
+        chatBox.appendChild(msg);
+        chatBox.scrollTop = chatBox.scrollHeight;
+        // Simulate typing effect
+        setTimeout(() => {
+          msg.innerHTML = "Bot: ";
+          typeText(msg, text, 30); // 30ms per letter
+        }, 800);
+      } else {
+        msg.innerText = "You: " + text;
+        chatBox.appendChild(msg);
+      }
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function typeText(element, text, speed) {
+      let i = 0;
+      function typing() {
+        if (i < text.length) {
+          element.innerHTML += text.charAt(i);
+          i++;
+          chatBox.scrollTop = chatBox.scrollHeight;
+          setTimeout(typing, speed);
+        }
+      }
+      typing();
+    }
+
+    function sendMessage() {
+      const text = userInput.value.trim();
+      if (!text) return;
+      addMessage("user", text);
+      userInput.value = "";
+      fetch("/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text })
+      })
+        .then(res => res.json())
+        .then(data => addMessage("bot", data.reply))
+        .catch(() => addMessage("bot", "⚠️ Server error — make sure Flask is running."));
+    }
+
+    sendBtn.addEventListener("click", sendMessage);
+    userInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") sendMessage();
+    });
+
+    suggestionButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        userInput.value = button.innerText;
+        sendMessage();
+      });
+    });
+  </script>
+</body>
+</html>
