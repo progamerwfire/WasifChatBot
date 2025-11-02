@@ -41,7 +41,7 @@ jokes = [
     "Why did the golfer bring two pairs of pants? In case he got a hole in one ⛳👖",
     "Why don’t eggs tell jokes? They’d crack each other up 🥚🤣",
     "I tried to catch fog yesterday. Mist opportunity 🌫️😂",
-    "What did the ocean say to the beach? Nothing, it just waved 🌊"
+    "What did the ocean say to the beach? Nothing, it just waved 🌊",
     "Why did the computer go to therapy? It had a hard drive!",
     "I'm reading a book about anti-gravity — it's impossible to put down!",
     "Parallel lines have so much in common. It’s a shame they’ll never meet.",
