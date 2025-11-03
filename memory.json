@@ -61,5 +61,13 @@
     "how to teach you new replies": "you can teach me using: teach:",
     "how can i teach you new replies": "you can teach me using: teach:",
     "whats your name": "i\u2019m wasifbot \u2014 your virtual buddy \ud83d\udc7e",
-    "what is your name": "i\u2019m wasifbot \u2014 your virtual buddy \ud83d\udc7e"
+    "what is your name": "i\u2019m wasifbot \u2014 your virtual buddy \ud83d\udc7e",
+    "flask": "flask is a lightweight python web framework used to build web applications and apis easily.",
+    "flask?": "flask is a lightweight python web framework used to build web applications and apis easily.",
+    "flask ?": "flask is a lightweight python web framework used to build web applications and apis easily.",
+    "python": "python is a high-level, versatile programming language used for web development, data analysis, automation, ai, and more.",
+    "whatss python": "python is a high-level, versatile programming language used for web development, data analysis, automation, ai, and more.teach:",
+    "whatss python?": "python is a high-level, versatile programming language used for web development, data analysis, automation, ai, and more.teach:",
+    "whatss python ?": "python is a high-level, versatile programming language used for web development, data analysis, automation, ai, and more.teach:",
+    "what are you doing": "i am here to teach you"
 }
