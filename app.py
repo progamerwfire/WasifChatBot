@@ -117,17 +117,48 @@ def chat():
     data = request.get_json()
     user_msg = data.get("message", "").strip().lower()
 
-    # --- Teaching feature ---
+    # --- Teaching feature (check before cleaning) ---
     if user_msg.startswith("teach:"):
         try:
             parts = user_msg.split("when i say")[1].split(", reply")
             key = parts[0].replace("'", "").replace('"', "").strip()
             value = parts[1].replace("'", "").replace('"', "").strip()
+            
+            # normalize the key so "what’s" = "whats"
+            key = (
+                key.replace("’", "'")
+                .replace("‘", "'")
+                .replace("`", "'")
+                .replace("?", "")
+                .replace(".", "")
+                .replace(",", "")
+                .replace("what's", "whats")
+                .replace("it's", "its")
+                .replace("you're", "youre")
+                .replace("i'm", "im")
+                .strip()
+            )
+
             memory[key] = value
             save_memory(memory)
             return jsonify({"reply": f"Got it! I'll reply '{value}' when you say '{key}' 😄"})
         except Exception:
             return jsonify({"reply": "⚠️ Format error! Use: teach: when I say 'x', reply 'y'"})
+
+    # --- Normalize apostrophes & punctuation (AFTER teach:) ---
+    user_msg = (
+        user_msg.replace("’", "'")  # convert fancy quotes to normal
+        .replace("‘", "'")
+        .replace("`", "'")
+        .replace("?", "")
+        .replace(".", "")
+        .replace(",", "")
+        .replace("what's", "whats")
+        .replace("it's", "its")
+        .replace("you're", "youre")
+        .replace("i'm", "im")
+        .strip()
+    )
 
     # --- Weather feature (multiple cities) ---
     if "weather" in user_msg:
@@ -153,14 +184,24 @@ def chat():
 
     # --- Default replies ---
     for key, val in default_responses.items():
-        if key in user_msg:
+        normalized_key = (
+            key.replace("’", "'")
+            .replace("‘", "'")
+            .replace("?", "")
+            .replace("what's", "whats")
+            .replace("it's", "its")
+            .replace("you're", "youre")
+            .replace("i'm", "im")
+            .strip()
+        )
+        if normalized_key in user_msg:
             return jsonify({"reply": val})
 
     # --- Fallback ---
     return jsonify({"reply": "Sorry, I don’t know this yet. You can teach me using: ' teach: when I say 'x', reply 'y' '"})
 
+
 if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)
-
