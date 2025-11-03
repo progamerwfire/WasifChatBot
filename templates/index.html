@@ -27,6 +27,18 @@
       overflow: hidden;
     }
 
+    /* ✅ Added Title Bar */
+    .chat-title {
+      text-align: center;
+      background: linear-gradient(90deg, #ff3b3b, #ff6b6b);
+      padding: 12px;
+      font-size: 20px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+      color: #fff;
+      box-shadow: 0 0 10px rgba(255, 59, 59, 0.5);
+    }
+
     .chat-box {
       flex: 1;
       padding: 15px;
@@ -158,6 +170,9 @@
 </head>
 <body>
   <div class="chat-container">
+    <!-- ✅ Added this title bar -->
+    <div class="chat-title">💬 WasifChatBot</div>
+
     <div class="chat-box" id="chat-box"></div>
 
     <div class="suggestions">
@@ -241,3 +256,4 @@
   </script>
 </body>
 </html>
+
