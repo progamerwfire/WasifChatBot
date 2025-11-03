@@ -157,7 +157,7 @@ def chat():
             return jsonify({"reply": val})
 
     # --- Fallback ---
-    return jsonify({"reply": "Sorry, I don’t know this yet. You can teach me using: 'teach: when I say 'x', reply 'y'.'"})
+    return jsonify({"reply": "Sorry, I don’t know this yet. You can teach me using: ' teach: when I say 'x', reply 'y' '"})
 
 if __name__ == "__main__":
     import os
